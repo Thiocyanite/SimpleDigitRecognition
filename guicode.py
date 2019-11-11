@@ -53,21 +53,25 @@ class Application:
         print("Loaded model from disk")
 
     def process(self):
-        self.canvas.postscript(file="Num.eps", height=55, width=55, x=4, y=4)
+        self.canvas.postscript(file="Num.eps", height=55, width=55, x=6, y=6)
         # read the postscript data
         data = ski_io.imread("Num.eps")
         # write a rasterized png file
         ski_io.imsave("Num.png", data)
         img = cv2.imread("Num.png")
-        kernel = np.ones((5, 5), np.float32) / 25
-        img = cv2.filter2D(img, -1, kernel)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        img = img.astype('float32') / 255
+        kernel = np.ones((3, 3), np.float32) / 25
+        img = cv2.filter2D(img, -1, kernel)
         img = cv2.resize(img, (28, 28))
         img = np.reshape(img, [1, 28, 28, 1])
-        print(img.shape)
+
+        import matplotlib.pyplot as plt
+        plt.imshow(img[0, :, :, 0], cmap='gray', interpolation='nearest')
+        plt.show()
+
         classes = self.neural_network.predict_classes(img)
         self.answerNum["text"] = classes
-        self.answerNum["text"] = "Num"
 
     def reset(self):
         self.canvas.create_rectangle(3, 3, 67, 67, fill="white")
