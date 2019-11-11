@@ -31,11 +31,11 @@ class GUI:
         self.root.mainloop()
 
     def process(self):
-        print("Wybrano Process")
         self.answerNum["text"] = "Num"
+        self.canvas.postscript(file="Num.eps",height=25,width=25,x=4,y=4)
 
     def reset(self):
-        self.canvas.create_rectangle(3, 3, 30, 30, fill="white", )
+        self.canvas.create_rectangle(3, 3, 30, 30, fill="white")
 
     def paint(self, event):
         x1, y1 = (event.x - 1), (event.y - 1)
