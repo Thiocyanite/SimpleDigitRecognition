@@ -1,5 +1,5 @@
 from tkinter import *
-
+from skimage import filters, measure, io, transform
 
 class GUI:
     def __init__(self):
@@ -24,7 +24,7 @@ class GUI:
         self.answer.pack(side=BOTTOM)
         self.drawHere = Label(self.leftFrame, text="Please write here:")
         self.drawHere.pack(side=LEFT)
-        self.canvas = Canvas(self.leftFrame, width=28, height=28)
+        self.canvas = Canvas(self.leftFrame, width=31, height=31)
         self.canvas.pack(side=RIGHT, expand=YES, fill=BOTH)
         self.reset()
         self.canvas.bind("<B1-Motion>", self.paint)
@@ -32,10 +32,10 @@ class GUI:
 
     def process(self):
         self.answerNum["text"] = "Num"
-        self.canvas.postscript(file="Num.eps",height=25,width=25,x=4,y=4)
+        self.canvas.postscript(file="Num.eps",height=27,width=27,x=4,y=4)
 
     def reset(self):
-        self.canvas.create_rectangle(3, 3, 30, 30, fill="white")
+        self.canvas.create_rectangle(3, 3, 33, 33, fill="white")
 
     def paint(self, event):
         x1, y1 = (event.x - 1), (event.y - 1)
