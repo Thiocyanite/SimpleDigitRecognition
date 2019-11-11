@@ -35,7 +35,7 @@ class Application:
         self.answer.pack(side=BOTTOM)
         self.drawHere = Label(self.leftFrame, text="Please write here:")
         self.drawHere.pack(side=LEFT)
-        self.canvas = Canvas(self.leftFrame, width=31, height=31)
+        self.canvas = Canvas(self.leftFrame, width=65, height=65)
         self.canvas.pack(side=RIGHT, expand=YES, fill=BOTH)
         self.reset()
         self.canvas.bind("<B1-Motion>", self.paint)
@@ -53,7 +53,7 @@ class Application:
         print("Loaded model from disk")
 
     def process(self):
-        self.canvas.postscript(file="Num.eps",height=27,width=27,x=4,y=4)
+        self.canvas.postscript(file="Num.eps", height=55, width=55, x=4, y=4)
         # read the postscript data
         data = ski_io.imread("Num.eps")
         # write a rasterized png file
@@ -67,14 +67,15 @@ class Application:
         print(img.shape)
         classes = self.neural_network.predict_classes(img)
         self.answerNum["text"] = classes
+        self.answerNum["text"] = "Num"
 
     def reset(self):
-        self.canvas.create_rectangle(3, 3, 33, 33, fill="white")
+        self.canvas.create_rectangle(3, 3, 67, 67, fill="white")
 
     def paint(self, event):
         x1, y1 = (event.x - 1), (event.y - 1)
         x2, y2 = (event.x + 1), (event.y + 1)
-        self.canvas.create_oval(x1, y1, x2, y2, fill="black")
+        self.canvas.create_rectangle([x1, y1, x2, y2], fill="black")
 
 
 if __name__ == "__main__":
