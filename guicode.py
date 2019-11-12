@@ -61,6 +61,7 @@ class Application:
         img = cv2.imread("Num.png")
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         img = img.astype('float32') / 255
+        img = 1 - img
         kernel = np.ones((3, 3), np.float32) / 25
         img = cv2.filter2D(img, -1, kernel)
         img = cv2.resize(img, (28, 28))
